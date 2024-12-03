@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<aside>
+		<ul>
+			{% for genre in genres %}
+				<li data-id="{{ genre.id }}">{{ genre.name }}</li>
+			{% endfor %}
+		</ul>
+	</aside>
+	<section id="movies"></section>
+{% endblock %}
