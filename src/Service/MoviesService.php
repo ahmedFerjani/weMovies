@@ -79,6 +79,6 @@ class MoviesService
             'value' => $rating
         ];
 
-        return $this->request($url, $params, 'POST'); // Send a POST request to rate the movie
+        return $this->request($url, $params, 'POST');
     }
 }

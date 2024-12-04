@@ -50,4 +50,23 @@ class MoviesController extends AbstractController
 
         return $this->json($videos);
     }
+
+    #[Route('/movies/{id}/rate', name: 'rate_movie', methods: ['POST'])]
+    public function rateMovie(int $id, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $rating = $data['rating'] ?? null;
+
+        if ($rating === null || $rating < 0 || $rating > 10) {
+            return $this->json(['success' => false, 'message' => 'Invalid rating.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $result = $this->moviesService->rateMovie($id, $rating);
+
+        if ($result['status_code'] === 1) {
+            return $this->json(['success' => true]);
+        } else {
+            return $this->json(['success' => false, 'message' => 'Failed to rate movie.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
