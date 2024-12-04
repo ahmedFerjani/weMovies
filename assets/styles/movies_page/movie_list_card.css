@@ -40,7 +40,11 @@
 }
 
 .star.filled {
-    color: gold;
+    color: #ffd700;
+}
+
+.star.half-filled {
+    color: #FFEA4C;
 }
 
 .movie-release-date {

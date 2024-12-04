@@ -5,10 +5,26 @@
 	<div class="movie-card-details">
 		<h3 class="movie-title">{{ movie.original_title }}</h3>
 		<div class="movie-rating">
-			{% for i in 1..5 %}
-				<span class="star{% if i <= movie.vote_average %} filled{% endif %}">&#9733;</span>
+			{% set fullStars = (movie.vote_average / 2) | round(0, 'floor') %}
+			{% set halfStars = (movie.vote_average / 2) - fullStars >= 0.5 ? 1 : 0 %}
+
+			{# Full stars #}
+			{% for i in 1..fullStars %}
+				<span class="star filled">&#9733;</span>
+				{# Full star #}
+			{% endfor %}
+
+			{# Half Filled stars #}
+			{% if halfStars %}
+				<span class="star half-filled">&#9733;</span>
+			{% endif %}
+
+			{# Empty stars #}
+			{% for i in (fullStars + halfStars + 1)..5 %}
+				<span class="star">&#9734;</span>
 			{% endfor %}
 		</div>
+
 		<p class="movie-release-date">{{ movie.release_date|date('d M Y') }}</p>
 		<p class="movie-description">{{ movie.overview }}</p>
 	</div>
