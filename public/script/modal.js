@@ -18,7 +18,7 @@ function showMovieModal(movie) {
   document.getElementById("modal-movie-title").innerText = movie.title;
   document.getElementById(
     "modal-votes"
-  ).innerText = `${movie.vote_count} votes`;
+  ).innerText = `${movie.vote_count}`;
 
   // Generate stars based on the vote average (assuming max 5 stars)
   const starContainer = document.getElementById("modal-stars");
