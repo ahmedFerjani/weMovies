@@ -13,7 +13,7 @@
 	{% include 'shared_components/modal.html.twig' %}
 
 	<div class="container">
-		{% include 'shared_components/video_play.html.twig' with {'video_key': '-xQHxCr9tWY'} %}
+		{% include 'shared_components/video_play.html.twig' with {'video_key': favoriteMovieVideoKey} %}
 		<div class="main_container">
 			{% include 'pages/movies_page/views/list_genres.html.twig' with { 'genres': genres } %}
 			{% include 'pages/movies_page/views/movie_list.html.twig' with { 'movies': movies } %}

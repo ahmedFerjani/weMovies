@@ -32,17 +32,12 @@ class MoviesService
         return $this->request('genre/movie/list');
     }
 
-    public function getMoviesByGenre(int $genreId = null): array
+    public function getMoviesByGenre(string $genreId = null): array
     {
         return $this->request(
             'discover/movie',
             ['with_genres' => $genreId, 'sort_by' => 'popularity.desc']
         );
-    }
-
-    public function getMovieDetails(int $movieId): array
-    {
-        return $this->request("movie/$movieId");
     }
 
     public function getMovieVideos(int $movieId): array
