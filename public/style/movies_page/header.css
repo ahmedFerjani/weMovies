@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.header-title {
+    font-size: 1.5rem;
+    color: black;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 200px;
+}
+
+.search-icon {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}

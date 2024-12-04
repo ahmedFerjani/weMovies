@@ -1,0 +1,29 @@
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('style/movies_page/list_genres.css') }}">
+{% endblock %}
+
+<div class="genre-list">
+	<form action="{{ path('homepage') }}" method="POST" id="genre-form">
+		<ul>
+			{% for genre in genres %}
+				<li class="genre-item">
+					<label>
+						<input type="checkbox" class="genre-checkbox" name="genres[]" value="{{ genre.id }}" {% if genre.id in app.request.get('genres', []) %} checked {% endif %}>
+						{{ genre.name }}
+					</label>
+				</li>
+			{% endfor %}
+		</ul>
+	</form>
+</div>
+
+{% block javascripts %}
+	<script>
+		// Automatically submit the form when a checkbox is clicked
+document.querySelectorAll('.genre-checkbox').forEach(function (checkbox) {
+checkbox.addEventListener('change', function () {
+document.getElementById('genre-form').submit();
+});
+});
+	</script>
+{% endblock %}

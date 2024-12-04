@@ -1,0 +1,15 @@
+<div class="movie-card" data-movie="{{ movie|json_encode }}">
+	<div class="movie-card-image">
+		<img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{ movie.poster_path }}" alt="{{ movie.original_title }}" class="movie-image">
+	</div>
+	<div class="movie-card-details">
+		<h3 class="movie-title">{{ movie.original_title }}</h3>
+		<div class="movie-rating">
+			{% for i in 1..5 %}
+				<span class="star{% if i <= movie.vote_average %} filled{% endif %}">&#9733;</span>
+			{% endfor %}
+		</div>
+		<p class="movie-release-date">{{ movie.release_date|date('d M Y') }}</p>
+		<p class="movie-description">{{ movie.overview }}</p>
+	</div>
+</div>

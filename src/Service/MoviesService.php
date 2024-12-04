@@ -21,7 +21,7 @@ class MoviesService
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->apiToken,
             ],
-            'query' => $params,
+            'query' => ['language' => 'fr', ...$params],
         ]);
 
         return $response->toArray();
@@ -32,13 +32,21 @@ class MoviesService
         return $this->request('genre/movie/list');
     }
 
-    public function getMoviesByGenre(int $genreId): array
+    public function getMoviesByGenre(int $genreId = null): array
     {
-        return $this->request('discover/movie', ['with_genres' => $genreId]);
+        return $this->request(
+            'discover/movie',
+            ['with_genres' => $genreId, 'sort_by' => 'popularity.desc']
+        );
     }
 
     public function getMovieDetails(int $movieId): array
     {
         return $this->request("movie/$movieId");
+    }
+
+    public function getMovieVideos(int $movieId): array
+    {
+        return $this->request("movie/$movieId/videos");
     }
 }

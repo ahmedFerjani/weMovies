@@ -1,0 +1,9 @@
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('style/movies_page/movie_list_card.css') }}">
+{% endblock %}
+
+<div class="movie_list">
+	{% for movie in movies %}
+		{% include 'pages/movies_page/views/movie_card.html.twig' with { 'movie': movie } %}
+	{% endfor %}
+</div>

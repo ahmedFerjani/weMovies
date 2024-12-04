@@ -1,0 +1,9 @@
+.genre-list {
+    border: 2px solid #ddd;
+    width: 20%;
+}
+
+.genre-item {
+    display: flex;
+    padding: 0.5rem;
+}
