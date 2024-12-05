@@ -3,3 +3,4 @@
 @import './movies_page/list_genres.css';
 @import './movies_page/movie_list_card.css';
 @import './shared_components/modal.css';
+@import './shared_components/autocomplete.css';

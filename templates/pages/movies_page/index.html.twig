@@ -17,6 +17,8 @@
 			{% include 'pages/movies_page/views/movie_list.html.twig' with { 'movies': movies } %}
 		</div>
 	</div>
+{% endblock %}
 
-
+{% block javascripts %}
+	<script src="{{ asset('build/app.js') }}"></script>
 {% endblock %}

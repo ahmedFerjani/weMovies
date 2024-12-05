@@ -7,14 +7,23 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class MoviesService
 {
     private string $apiToken;
+    private string $apiURL;
 
     public function __construct(
         private HttpClientInterface $httpClient,
         private string $tmdbApiToken,
+        private string $tmdbApiURL,
     ) {
         $this->apiToken = $tmdbApiToken;
+        $this->apiURL = $tmdbApiURL;
     }
 
+    /**
+     * Generic themoviedb API request 
+     * @param string $url endpoint
+     * @param array $params query params
+     * @param string $method HTTP Method
+     */
     private function request(string $url, array $params = [], string $method = 'GET'): array
     {
         $options = [
@@ -29,7 +38,7 @@ class MoviesService
             $options['json'] = $params;
         }
 
-        $response = $this->httpClient->request($method, "https://api.themoviedb.org/3/$url", $options);
+        $response = $this->httpClient->request($method, $this->apiURL . $url, $options);
 
         return $response->toArray();
     }
@@ -67,6 +76,16 @@ class MoviesService
     }
 
     /**
+     * Get Movie Details
+     * @param int $movieId The movie ID
+     * @return array The response from the TMDb API
+     */
+    public function getMovieDetails(string $movieId): array
+    {
+        return $this->request("movie/$movieId");
+    }
+
+    /**
      * Rate a movie
      * @param int $movieId The movie ID
      * @param float $rating The rating value (0 to 10)
@@ -80,5 +99,15 @@ class MoviesService
         ];
 
         return $this->request($url, $params, 'POST');
+    }
+
+    /**
+     * Search for movies by query
+     * @param string $query The search query
+     * @return array The response from the TMDb API
+     */
+    public function searchMovies(string $query): array
+    {
+        return $this->request('search/movie', ['query' => $query]);
     }
 }

@@ -12,14 +12,3 @@
 		</ul>
 	</form>
 </div>
-
-{% block javascripts %}
-	<script>
-		// Automatically submit the form when a checkbox is clicked
-document.querySelectorAll('.genre-checkbox').forEach(function (checkbox) {
-checkbox.addEventListener('change', function () {
-document.getElementById('genre-form').submit();
-});
-});
-	</script>
-{% endblock %}

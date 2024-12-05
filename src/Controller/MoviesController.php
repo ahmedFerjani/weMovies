@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\MoviesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,14 +12,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class MoviesController extends AbstractController
 {
     public function __construct(private MoviesService $moviesService) {}
-    #[Route('/movies', name: 'homepage')]
+    #[Route('/', name: 'homepage', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
-        // retrieve genres if already selected
+        // Retrieving genres if already selected
         $all = $request->request->all();
         $selectedGenres = array_key_exists('genres', $all) ? $all['genres'] : [null];
 
-        // can be a comma (AND) or pipe (OR) separated query
+        // Transforming the search query: can be separated by comma (AND) or pipe (OR)
         $selectedGenresAnd = implode(',', $selectedGenres);
 
         // fetch list of movies and genres
@@ -28,6 +29,7 @@ class MoviesController extends AbstractController
 
         $favoriteMovieVideoKey = null;
 
+        // Setting up the default movie banner (video key)
         if ($firstMovieId) {
             $videos = $this->moviesService->getMovieVideos($firstMovieId);
 
@@ -44,12 +46,35 @@ class MoviesController extends AbstractController
     }
 
     #[Route('/movies/{id}/videos', name: 'movie_videos', methods: ['GET'])]
-    public function getMovieVideos(int $id): Response
+    public function getMovieVideos(string $id): Response
     {
         $videos = $this->moviesService->getMovieVideos($id);
 
         return $this->json($videos);
     }
+
+    #[Route('/movies/autocomplete', name: 'movies_autocomplete', methods: ['GET'])]
+    public function autocomplete(Request $request): Response
+    {
+        $query = $request->query->get('query');
+
+        if (!$query) {
+            return $this->json(['results' => []]);
+        }
+
+        $movies = $this->moviesService->searchMovies($query);
+
+        return $this->json($movies);
+    }
+
+    #[Route('/movies/{movieId}', name: 'get_movie_details', methods: ['GET'])]
+    public function getMovieDetails(string $movieId): JsonResponse
+    {
+        $movieDetails = $this->moviesService->getMovieDetails($movieId);
+
+        return $this->json($movieDetails);
+    }
+
 
     #[Route('/movies/{id}/rate', name: 'rate_movie', methods: ['POST'])]
     public function rateMovie(int $id, Request $request): Response
